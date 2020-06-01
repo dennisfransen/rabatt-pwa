@@ -1,12 +1,12 @@
 <template>
   <v-container>
-    <section id="search" style="background-color: blue;">
+    <section id="search">
       <Search class="mt-4"/>
     </section>
-    <section id="trending" style="background-color: red;">
+    <section id="trending">
       <Trending />
     </section>
-    <section id="categories" style="background-color: green;">
+    <section id="categories">
       <Categories />
     </section>
   </v-container>
