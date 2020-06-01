@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import Search from "@/components/utils/Search";
+import Search from "@/components/home/Search";
 import Trending from "@/components/home/Trending";
 import Categories from "@/components/home/Categories";
 
