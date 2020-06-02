@@ -1,22 +1,24 @@
 <template>
   <v-app>
-    <Navigationbar />
+    <Navigationbar v-if="!isLoggedIn" />
     <v-content>
       <router-view />
     </v-content>
-    <!-- <BottomNavigationbar /> -->
   </v-app>
 </template>
 
 <script>
-import Navigationbar from '@/components/templates/Navigationbar'
-// import BottomNavigationbar from '@/components/templates/BottomNavigationbar'
+import Navigationbar from "@/components/templates/Navigationbar";
 
 export default {
   name: "App",
+  computed: {
+    isLoggedIn() {
+      return this.$route.name === "Login" || this.$route.name === "Register";
+    },
+  },
   components: {
     Navigationbar,
-    // BottomNavigationbar
-  }
+  },
 };
 </script>
