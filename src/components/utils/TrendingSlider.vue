@@ -1,9 +1,9 @@
 <template>
   <v-slide-group v-model="selected" class="py-2" mandatory center-active>
-    <v-slide-item v-for="trend in trends" :key="trend.title">
+    <v-slide-item v-for="trend in trends" :key="trend.title" class="green">
       <v-card
-        class="mr-2"
-        height="100"
+        class="mr-2 my-2"
+        height="125"
         width="200"
         @click="goToTrend(trend.title)"
       >
@@ -23,6 +23,7 @@
 export default {
   name: "TrendingSlider",
   data: () => ({
+    selected: 0,
     trends: [
       { image: "https://i.imgur.com/2ul6pa7.jpg", title: "Pizza" },
       { image: "https://i.imgur.com/BTrujQY.jpg", title: "Clothing" },
@@ -40,7 +41,7 @@ export default {
 
 <style>
 .image {
-  height: 100px;
+  height: 125px;
   width: 200px;
 }
 

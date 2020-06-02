@@ -1,5 +1,5 @@
 <template>
-  <div id="search">
+  <div id="search" class="mt-4">
     <v-text-field
       id="search-field"
       label="Search"
@@ -24,7 +24,8 @@ export default {
   computed: {
     filteredStores() {
       return this.stores.filter((store) => {
-        if (store.toLowerCase().includes(this.searchText.toLowerCase())) return store
+        if (store.toLowerCase().includes(this.searchText.toLowerCase()))
+          return store;
       });
     },
   },

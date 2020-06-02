@@ -1,26 +1,30 @@
 <template>
   <div class="navigationbar">
     <v-app-bar app flat height="64" color="white">
+      <v-icon v-if="isHomeRoute" @click="goToNotifications">mdi-bell</v-icon>
+      <v-icon v-else @click="goToHome">mdi-chevron-left</v-icon>
+      <v-spacer></v-spacer>
+      <v-toolbar-title>
+        <span class="font-weight-light">dis</span>
+        <span class="font-weight-bold">Count</span>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-spacer></v-spacer>
-      <v-toolbar-title>Discount-App</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-avatar class="elevation-2 profile-avatar" @click="goToProfile">
-        <v-img src="https://i.imgur.com/HAcDxtn.jpg"></v-img>
-      </v-avatar>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" app>
+    <v-navigation-drawer app v-model="drawer" right>
       <v-list nav class="py-0">
-        <v-list-item v-for="item in items" :key="item.title" link>
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
+        <template v-for="(item, i) in items">
+          <v-list-item :key="i" link :to="item.link">
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
 
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
       </v-list>
     </v-navigation-drawer>
   </div>
@@ -32,14 +36,21 @@ export default {
   data: () => ({
     drawer: false,
     items: [
-      { title: "Dashboard", icon: "mdi-view-dashboard" },
-      { title: "Photos", icon: "mdi-image" },
-      { title: "About", icon: "mdi-help-box" },
+      { title: "Home", icon: "mdi-home", link: "/" },
+      { title: "Profile", icon: "mdi-account", link: "/profile" },
     ],
   }),
+  computed: {
+    isHomeRoute() {
+      return this.$route.name === "Home";
+    },
+  },
   methods: {
-    goToProfile() {
-      alert("Going to profile");
+    goToHome() {
+      this.$router.push("/");
+    },
+    goToNotifications() {
+      this.$router.push("/notifications");
     },
   },
 };

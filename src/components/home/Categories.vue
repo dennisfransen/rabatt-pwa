@@ -1,28 +1,22 @@
 <template>
   <div>
-    <TitleWithButton link="/">
+    <TitleWithButton link="/categories">
       <template v-slot:title>Categories</template>
       <template v-slot:btn-text>See all</template>
     </TitleWithButton>
+    
     <v-row>
-      <v-col
-        cols="4"
-        v-for="categoryIcon in categoryIcons.slice(0, 6)"
-        :key="categoryIcon"
-      >
-        <v-card
-          id="category-sheet"
-          :color="categoryIcon.color"
-          @click="goToCategory(categoryIcon.icon)"
-        >
+      <v-col cols="4" v-for="(category, i) in categories.slice(0, 6)" :key="i">
+        <v-card id="category-sheet" :color="category.color" @click="goToCategory(category.icon)">
           <v-container fill-height>
             <v-icon class="mx-auto" color="white" x-large>
-              {{ categoryIcon.icon }}
+              {{ category.icon }}
             </v-icon>
           </v-container>
         </v-card>
-        <p class="text-center body-2 mt-2
-       mb-0">{{ categoryIcon.title }}</p>
+        <p class="text-center body-2 mt-2 mb-0">
+          {{ category.title }}
+        </p>
       </v-col>
     </v-row>
   </div>
@@ -34,7 +28,7 @@ import TitleWithButton from "@/components/utils/TitleWithButton";
 export default {
   name: "Categories",
   data: () => ({
-    categoryIcons: [
+    categories: [
       { icon: "mdi-hamburger", color: "error", title: "Hamburger" },
       { icon: "mdi-pizza", color: "warning", title: "Pizza" },
       { icon: "mdi-cup-water", color: "secondary", title: "Water" },

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <section id="search">
-      <Search class="mt-4"/>
+      <Search />
     </section>
     <section id="trending">
       <Trending />
