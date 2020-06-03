@@ -5,9 +5,10 @@ import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
 import Categories from "@/views/Categories.vue";
 import Category from "@/views/Category.vue";
+import AddDiscount from "@/views/AddDiscount.vue";
+import AddCategory from "@/views/AddCategory.vue";
 
 import Discount from "@/components/discounts/Discount.vue";
-import AddDiscount from "@/components/discounts/AddDiscount.vue";
 
 Vue.use(VueRouter);
 
@@ -43,9 +44,14 @@ const routes = [
     component: Discount,
   },
   {
-    path: "/add",
+    path: "/add-discount",
     name: "AddDiscount",
     component: AddDiscount,
+  },
+  {
+    path: "/add-category",
+    name: "AddCategory",
+    component: AddCategory,
   },
 ];
 

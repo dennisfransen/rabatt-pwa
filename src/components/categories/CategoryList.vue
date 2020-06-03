@@ -4,7 +4,7 @@
     class="overflow-y-auto"
   >
     <v-list-item
-      v-for="category in categories"
+      v-for="category in getCategories"
       :key="category.title"
       @click="selectCategory(category.id)"
       dark
@@ -22,18 +22,17 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "CategoryList",
-  data: () => ({
-    categories: [
-      { id: 1, icon: "mdi-tshirt-crew", color: "purple", title: "Clothing" },
-      { id: 2, icon: "mdi-food-fork-drink", color: "red", title: "Restaurants", },
-      { id: 3, icon: "mdi-glass-mug-variant", color: "orange", title: "Pubs" },
-      { id: 4, icon: "mdi-store", color: "green", title: "Food stores" },
-      { id: 5, icon: "mdi-car", color: "teal", title: "Car parts" },
-    ],
-  }),
+  created() {
+    this.fetchCategoriesFromFirebase();
+  },
+  computed: {
+    ...mapGetters("Categories", ["getCategories"]),
+  },
   methods: {
+    ...mapActions("Categories", ["fetchCategoriesFromFirebase"]),
     selectCategory(id) {
       this.$router.push(`/category/${id}`);
     },

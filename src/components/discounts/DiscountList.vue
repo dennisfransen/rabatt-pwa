@@ -1,10 +1,6 @@
 <template>
   <div id="discounts">
-    <v-sheet
-      v-for="discount in discounts"
-      :key="discount.id"
-      @click="goToDiscount(discount.id)"
-    >
+    <v-sheet v-for="discount in getDiscountsByCategory" :key="discount.id" @click="goToDiscount(discount.id)">
       <v-img class="image" height="100" :src="discount.imageURL">
         <div class="image-overlay">
           <v-container fill-height>
@@ -31,12 +27,18 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "Discounts",
-  props: {
-    discounts: Array,
+  mounted() {
+    this.fetchDiscountsByCategory({categoryId: this.$route.params.id})
+  },
+  computed: {
+    ...mapGetters("Discounts", ["getDiscountsByCategory"]),
   },
   methods: {
+    ...mapActions("Discounts", ["fetchDiscountsByCategory"]),
     goToDiscount(id) {
       this.$router.push(`/discounts/${id}`);
     },

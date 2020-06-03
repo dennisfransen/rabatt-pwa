@@ -1,155 +1,109 @@
-// import * as firebase from "firebase/app";
+import * as firebase from "firebase/app";
+import "firebase/firestore";
 
 export default {
   namespaced: true,
   state: {
-    discounts: [
-      {
-        id: 0,
-        categoryId: 4,
-        title: "ICA",
-        discount: "50%",
-        imageURL: "https://i.imgur.com/3Z1LIuo.jpg",
-        discountDesrciption:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi porro voluptas fugit asperiores culpa.",
-        qrURL: "https://i.imgur.com/y6AfgCU.png",
-        slogan: "Wintersale",
-      },
-      {
-        id: 1,
-        categoryId: 2,
-        title: "Johnny's pizzeria",
-        discount: "30%",
-        imageURL: "https://i.imgur.com/ZUa3YUh.jpg",
-        discountDesrciption:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi porro voluptas fugit asperiores culpa.",
-        qrURL: "https://i.imgur.com/y6AfgCU.png",
-        slogan: "Wintersale",
-      },
-      {
-        id: 2,
-        categoryId: 1,
-        title: "H&M",
-        discount: "25%",
-        imageURL: "https://i.imgur.com/2ul6pa7.jpg",
-        discountDesrciption:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi porro voluptas fugit asperiores culpa.",
-        qrURL: "https://i.imgur.com/y6AfgCU.png",
-        slogan: "Wintersale",
-      },
-      {
-        id: 3,
-        categoryId: 2,
-        title: "Rozana",
-        discount: "5%",
-        imageURL: "https://i.imgur.com/HNehDC9.jpg",
-        discountDesrciption:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi porro voluptas fugit asperiores culpa.",
-        qrURL: "https://i.imgur.com/y6AfgCU.png",
-        slogan: "Wintersale",
-      },
-      {
-        id: 4,
-        categoryId: 1,
-        title: "MQ",
-        discount: "30%",
-        imageURL: "https://i.imgur.com/ZUa3YUh.jpg",
-        discountDesrciption:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi porro voluptas fugit asperiores culpa.",
-        qrURL: "https://i.imgur.com/y6AfgCU.png",
-        slogan: "Wintersale",
-      },
-      {
-        id: 5,
-        categoryId: 1,
-        title: "Jeans Bolaget",
-        discount: "30%",
-        imageURL: "https://i.imgur.com/ZUa3YUh.jpg",
-        discountDesrciption:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi porro voluptas fugit asperiores culpa.",
-        qrURL: "https://i.imgur.com/y6AfgCU.png",
-        slogan: "Wintersale",
-      },
-      {
-        id: 6,
-        categoryId: 1,
-        title: "BikBok",
-        discount: "30%",
-        imageURL: "https://i.imgur.com/ZUa3YUh.jpg",
-        discountDesrciption:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi porro voluptas fugit asperiores culpa.",
-        qrURL: "https://i.imgur.com/y6AfgCU.png",
-        slogan: "Wintersale",
-      },
-      {
-        id: 7,
-        categoryId: 1,
-        title: "Gina Tricot",
-        discount: "30%",
-        imageURL: "https://i.imgur.com/ZUa3YUh.jpg",
-        discountDesrciption:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi porro voluptas fugit asperiores culpa.",
-        qrURL: "https://i.imgur.com/y6AfgCU.png",
-        slogan: "Summersale",
-      },
-      {
-        id: 8,
-        categoryId: 1,
-        title: "Junkyard",
-        discount: "30%",
-        imageURL: "https://i.imgur.com/ZUa3YUh.jpg",
-        discountDesrciption:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi porro voluptas fugit asperiores culpa.",
-        qrURL: "https://i.imgur.com/y6AfgCU.png",
-        slogan: "Summersale",
-      },
-      {
-        id: 9,
-        categoryId: 1,
-        title: "Jack & Jones",
-        discount: "30%",
-        imageURL: "https://i.imgur.com/ZUa3YUh.jpg",
-        discountDesrciption:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi porro voluptas fugit asperiores culpa.",
-        qrURL: "https://i.imgur.com/y6AfgCU.png",
-        slogan: "Summersale",
-      },
-    ],
-    discount: null,
-    categorizedDiscounts: null,
+    discounts: [],
+    discount: {},
+    categorizedDiscounts: [],
   },
   mutations: {
-    setDiscount(state, payload) {
-      state.discount = payload;
+    setDiscounts(state, payload) {
+      state.discounts = payload;
     },
-    categorizeDiscounts(state, payload) {
+    setDiscount(state, { id }) {
+      let discount = state.categorizedDiscounts.filter((discount) => {
+        return discount.id == id;
+      });
+      state.discount = discount[0];
+    },
+    addDiscount(state, payload) {
+      state.discounts.push(payload);
+    },
+    setCategorizeDiscounts(state, payload) {
       state.categorizedDiscounts = payload;
     },
   },
   actions: {
-    fetchDiscountFromFirebase({ commit, state }, { id }) {
-      let discount = state.discounts.filter((discount) => {
-        return discount.id == id;
-      });
-
-      if (discount.length < 1) return;
-      commit("setDiscount", discount[0]);
+    async fetchDiscounts({ commit }) {
+      await firebase
+        .firestore()
+        .collection("discounts")
+        .get()
+        .then((querySnapShop) => {
+          let discounts = [];
+          querySnapShop.forEach((doc) => {
+            discounts.push({
+              id: doc.data().id,
+              categoryId: doc.data().categoryId,
+              title: doc.data().title,
+              discount: doc.data().discount,
+              imageURL: doc.data().discount,
+              discountDesrciption: doc.data().discount,
+              qrURL: doc.data().qrURL,
+              slogan: doc.data().slogan,
+            });
+          });
+          commit("setDiscounts", discounts);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
-    sortDiscountsByCategory({ commit, state }, { categoryId }) {
-      let discounts = state.discounts.filter((discount) => {
-        return discount.categoryId == categoryId;
-      });
-      commit("categorizeDiscounts", discounts);
+    async fetchDiscountsByCategory({ commit }, { categoryId }) {
+      let catId = parseInt(categoryId);
+
+      await firebase
+        .firestore()
+        .collection("discounts")
+        .where("categoryId", "==", catId)
+        .onSnapshot(function(querySnapshot) {
+          var discounts = [];
+          querySnapshot.forEach((doc) => {
+            discounts.push({
+              id: doc.data().id,
+              categoryId: doc.data().categoryId,
+              title: doc.data().title,
+              discount: doc.data().discount,
+              imageURL: doc.data().imageURL,
+              discountDesrciption: doc.data().discount,
+              qrURL: doc.data().qrURL,
+              slogan: doc.data().slogan,
+            });
+          });
+          commit("setCategorizeDiscounts", discounts);
+        });
+    },
+    async createDiscount({ commit }, discount) {
+      let discountObject = {
+        id: Date.now(), // Using Date.now() to produce unique id.
+        categoryId: discount.categoryId,
+        title: discount.title,
+        discount: discount.discount,
+        imageURL: "https://i.imgur.com/HNehDC9.jpg",
+        discountDesrciption: discount.discountDesrciption,
+        qrURL: "https://i.imgur.com/qj1Ml5K.png",
+        slogan: discount.slogan,
+      };
+
+      await firebase
+        .firestore()
+        .collection("discounts")
+        .add(discountObject)
+        .then(() => {
+          commit("addDiscount", discountObject);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
   getters: {
-    getDiscountData: (state) => {
+    getDiscount: (state) => {
       return state.discount;
     },
-    getDiscountsData: (state) => {
-      return state.discounts;
-    },
-    getAllDiscountsByCategory: (state) => {
+    getDiscountsByCategory: (state) => {
       return state.categorizedDiscounts;
     },
   },

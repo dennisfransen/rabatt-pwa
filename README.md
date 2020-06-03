@@ -47,3 +47,8 @@ https://i.imgur.com/ZUa3YUh.jpg
 https://i.imgur.com/3Z1LIuo.jpg
 https://i.imgur.com/HNehDC9.jpg
 ```
+
+## QR image 
+```
+https://i.imgur.com/qj1Ml5K.png
+```

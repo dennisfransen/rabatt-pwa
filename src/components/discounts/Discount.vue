@@ -22,33 +22,30 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "Discount",
   created() {
-    this.populateDiscount();
+    this.setDiscount({ id: this.$route.params.id });
+    this.discount = this.getDiscount;
   },
   data: () => ({
     discount: {
-      id: null,
-      categoryId: null,
-      title: null,
-      discount: null,
-      imageURL: null,
-      discountDesrciption: null,
-      qrURL: null,
+      id: "",
+      categoryId: "",
+      title: "",
+      discount: "",
+      imageURL: "",
+      discountDesrciption: "",
+      qrURL: "",
     },
   }),
-  computed: {
-    ...mapGetters("Discounts", ["getDiscountData"]),
-  },
   methods: {
-    ...mapActions("Discounts", ["fetchDiscountFromFirebase"]),
-    populateDiscount() {
-      this.fetchDiscountFromFirebase({ id: this.$route.params.id });
-      this.discount = this.getDiscountData;
-    },
+    ...mapMutations("Discounts", ["setDiscount"]),
+  },
+  computed: {
+    ...mapGetters("Discounts", ["getDiscount"]),
   },
 };
 </script>
