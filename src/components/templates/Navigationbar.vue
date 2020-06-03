@@ -2,7 +2,7 @@
   <div class="navigationbar">
     <v-app-bar app flat height="64" color="white">
       <v-icon v-if="isHomeRoute" @click="goToNotifications">mdi-bell</v-icon>
-      <v-icon v-else @click="goToHome">mdi-chevron-left</v-icon>
+      <v-icon v-else @click="goBack">mdi-chevron-left</v-icon>
       <v-spacer></v-spacer>
       <v-toolbar-title>
         <span class="font-weight-light">dis</span>
@@ -47,8 +47,8 @@ export default {
     },
   },
   methods: {
-    goToHome() {
-      this.$router.push("/");
+    goBack() {
+      this.$router.go(-1)
     },
     goToNotifications() {
       this.$router.push("/notifications");

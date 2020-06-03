@@ -58,18 +58,13 @@ export default {
     },
   },
   actions: {
-    getDiscountFromFirebase({ commit }, { id }) {
-      let discount = {
-        id: 1,
-        title: "Harry's pizzeria",
-        discount: "30%",
-        imageURL: "https://i.imgur.com/ZUa3YUh.jpg",
-        discountDesrciption:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi porro voluptas fugit asperiores culpa.",
-        qrURL: "https://i.imgur.com/y6AfgCU.png",
-      };
-      commit("setDiscount", discount);
-      console.log(id);
+    getDiscountFromFirebase({ commit, state }, { id }) {
+      let discount = state.discounts.filter(discount => {
+        return discount.id == id
+      })
+
+      if (discount.length < 1) return
+      commit("setDiscount", discount[0]);
     },
   },
   getters: {
