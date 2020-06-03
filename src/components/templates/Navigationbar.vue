@@ -38,6 +38,7 @@ export default {
     items: [
       { title: "Home", icon: "mdi-home", link: "/" },
       { title: "Profile", icon: "mdi-account", link: "/profile" },
+      { title: "Discounts", icon: "mdi-tag", link: "/discounts"}
     ],
   }),
   computed: {

@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import Discounts from "./discounts";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 
@@ -72,5 +73,5 @@ export default new Vuex.Store({
       return state.loader;
     },
   },
-  modules: {},
+  modules: { Discounts },
 });

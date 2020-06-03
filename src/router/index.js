@@ -4,7 +4,8 @@ import Home from "@/views/Home.vue";
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
 import Categories from "@/views/Categories.vue";
-
+import Discounts from "@/views/Discounts.vue"
+import Discount from "@/components/discounts/Discount.vue"
 
 Vue.use(VueRouter);
 
@@ -29,6 +30,16 @@ const routes = [
     name: "Categories",
     component: Categories,
   },
+  {
+    path: "/discounts",
+    name: "Discounts",
+    component: Discounts
+  },
+  {
+    path: "/discounts/:id",
+    name: "Discount",
+    component: Discount
+  }
 ];
 
 const router = new VueRouter({
