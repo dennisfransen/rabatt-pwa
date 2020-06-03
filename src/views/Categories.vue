@@ -1,12 +1,14 @@
 <template>
-  <v-container>
-    <section id="search">
-      <Search />
-    </section>
+  <div id="categories">
+    <v-container class="pb-0">
+      <section id="search">
+        <Search />
+      </section>
+    </v-container>
     <section id="category-list">
       <CategoryList />
     </section>
-  </v-container>
+  </div>
 </template>
 
 <script>
