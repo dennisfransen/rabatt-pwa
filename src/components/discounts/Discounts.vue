@@ -10,9 +10,12 @@
           <v-container fill-height>
             <v-row align="center">
               <v-col cols="8">
-                <h2 class="white--text font-weight-medium">
+                <h2 class="white--text font-weight-bold">
                   {{ discount.title }}
                 </h2>
+                <p class="white--text body-1 font-weight-medium">
+                  {{ discount.slogan }}
+                </p>
               </v-col>
               <v-col cols="4">
                 <h1 class="display-2 font-weight-black white--text text-end">
@@ -28,29 +31,12 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   name: "Discounts",
-  created() {
-    this.populateDiscounts();
-  },
-  data: () => ({
-    discounts: [
-      {
-        id: null,
-        title: null,
-        discount: null,
-        imageURL: null,
-      },
-    ],
-  }),
-  computed: {
-    ...mapGetters("Discounts", ["getDiscountsData"]),
+  props: {
+    discounts: Array,
   },
   methods: {
-    populateDiscounts() {
-      this.discounts = this.getDiscountsData;
-    },
     goToDiscount(id) {
       this.$router.push(`/discounts/${id}`);
     },

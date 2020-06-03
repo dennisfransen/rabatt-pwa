@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Search from "@/components/home/Search";
+import Search from "@/components/utils/Search";
 import CategoryList from "@/components/categories/CategoryList";
 
 export default {

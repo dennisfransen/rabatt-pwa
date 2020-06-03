@@ -32,6 +32,7 @@ export default {
   data: () => ({
     discount: {
       id: null,
+      categoryId: null,
       title: null,
       discount: null,
       imageURL: null,
@@ -43,9 +44,9 @@ export default {
     ...mapGetters("Discounts", ["getDiscountData"]),
   },
   methods: {
-    ...mapActions("Discounts", ["getDiscountFromFirebase"]),
+    ...mapActions("Discounts", ["fetchDiscountFromFirebase"]),
     populateDiscount() {
-      this.getDiscountFromFirebase({ id: this.$route.params.id });
+      this.fetchDiscountFromFirebase({ id: this.$route.params.id });
       this.discount = this.getDiscountData;
     },
   },

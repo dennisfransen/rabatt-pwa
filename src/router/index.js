@@ -4,8 +4,10 @@ import Home from "@/views/Home.vue";
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
 import Categories from "@/views/Categories.vue";
-import Discounts from "@/views/Discounts.vue"
-import Discount from "@/components/discounts/Discount.vue"
+import Category from "@/views/Category.vue";
+
+import Discount from "@/components/discounts/Discount.vue";
+import AddDiscount from "@/components/discounts/AddDiscount.vue";
 
 Vue.use(VueRouter);
 
@@ -23,7 +25,7 @@ const routes = [
   {
     path: "/register",
     name: "Register",
-    component: Register
+    component: Register,
   },
   {
     path: "/categories",
@@ -31,15 +33,20 @@ const routes = [
     component: Categories,
   },
   {
-    path: "/discounts",
-    name: "Discounts",
-    component: Discounts
+    path: "/category/:id",
+    name: "Category",
+    component: Category,
   },
   {
     path: "/discounts/:id",
     name: "Discount",
-    component: Discount
-  }
+    component: Discount,
+  },
+  {
+    path: "/add",
+    name: "AddDiscount",
+    component: AddDiscount,
+  },
 ];
 
 const router = new VueRouter({

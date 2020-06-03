@@ -4,10 +4,14 @@
       <template v-slot:title>Categories</template>
       <template v-slot:btn-text>See all</template>
     </TitleWithButton>
-    
+
     <v-row>
       <v-col cols="4" v-for="(category, i) in categories.slice(0, 6)" :key="i">
-        <v-card id="category-sheet" :color="category.color" @click="goToCategory(category.icon)">
+        <v-card
+          id="category-sheet"
+          :color="category.color"
+          @click="goToCategory(category.id)"
+        >
           <v-container fill-height>
             <v-icon class="mx-auto" color="white" x-large>
               {{ category.icon }}
@@ -29,26 +33,22 @@ export default {
   name: "Categories",
   data: () => ({
     categories: [
-      { icon: "mdi-hamburger", color: "error", title: "Hamburger" },
-      { icon: "mdi-pizza", color: "warning", title: "Pizza" },
-      { icon: "mdi-cup-water", color: "secondary", title: "Water" },
-      { icon: "mdi-tshirt-crew", color: "accent", title: "Clothing" },
-      { icon: "mdi-food-fork-drink", color: "secondary", title: "Restaurant" },
-      { icon: "mdi-glass-mug-variant", color: "warning", title: "Pub" },
-      { icon: "mdi-food-croissant", color: "warning", title: "B&B" },
-      { icon: "mdi-food-drumstick", color: "error", title: "" },
-      { icon: "mdi-food-steak", color: "error", title: "" },
-      { icon: "mdi-food-variant", color: "warning", title: "" },
-      { icon: "mdi-ladybug", color: "warning", title: "" },
-      { icon: "mdi-noodles", color: "warning", title: "" },
-      { icon: "mdi-apple", color: "success", title: "" },
-      { icon: "mdi-food", color: "success", title: "" },
-      { icon: "mdi-peanut", color: "warning", title: "" },
+      { id: 1, icon: "mdi-tshirt-crew", color: "purple", title: "Clothing" },
+      { id: 2, icon: "mdi-food-fork-drink", color: "error", title: "Restaurants", },
+      { id: 3, icon: "mdi-glass-mug-variant", color: "warning", title: "Pubs" },
+      { id: 4, icon: "mdi-store", color: "green", title: "Food stores" },
+      { id: 5, icon: "mdi-car", color: "primary", title: "Car parts" },
+      { id: 6, icon: "mdi-laptop-chromebook", color: "blue", title: "Computer parts" },
+      { id: 7, icon: "mdi-cupcake", color: "yellow", title: "Baking" },
+      { id: 8, icon: "mdi-noodles", color: "warning", title: "Asian" },
+      { id: 9, icon: "mdi-apple", color: "success", title: "Fruits" },
+      { id: 10, icon: "mdi-food", color: "success", title: "Random" },
+      { id: 11, icon: "mdi-peanut", color: "warning", title: "Nuts" },
     ],
   }),
   methods: {
-    goToCategory(icon) {
-      alert(`Going to ${icon}`);
+    goToCategory(id) {
+      this.$router.push(`/category/${id}`);
     },
   },
   components: {
