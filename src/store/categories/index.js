@@ -5,6 +5,8 @@ export default {
   namespaced: true,
   state: {
     categories: [],
+    loader: false,
+    error: null,
   },
   mutations: {
     setCategories(state, categories) {
@@ -13,9 +15,17 @@ export default {
     addCategory(state, category) {
       state.categories.push(category);
     },
+    setLoader(state, isLoading) {
+      state.loader = isLoading;
+    },
+    setError(state, error) {
+      state.error = error;
+    },
   },
   actions: {
-    async fetchCategoriesFromFirebase({ commit }) {
+    async fetchCategories({ commit }) {
+      commit("setLoader", true);
+      commit("setError", null);
       await firebase
         .firestore()
         .collection("categories")
@@ -31,27 +41,35 @@ export default {
             });
           });
           commit("setCategories", categories);
+          commit("setLoader", false);
         })
         .catch((error) => {
-          console.log(error);
+          commit("setLoader", false);
+          commit("setError", error);
         });
     },
     async createCategory({ commit }, { title, icon, color }) {
+      commit("setLoader", true);
+      commit("setError", null);
+
       let categoryObject = {
         id: Date.now(), // Using Date.now() to produce unique id.
         title: title,
         icon: icon,
         color: color,
       };
+      
       await firebase
         .firestore()
         .collection("categories")
         .add(categoryObject)
         .then(() => {
           commit("addCategory", categoryObject);
+          commit("setLoader", false);
         })
         .catch((error) => {
-          console.log(error);
+          commit("setLoader", false);
+          commit("setError", error);
         });
     },
   },
@@ -59,8 +77,14 @@ export default {
     getCategories: (state) => {
       return state.categories;
     },
-    getFeaturedCategories(state, getters) {
+    getFeaturedCategories: (state, getters) => {
       return getters.getCategories.slice(0, 6);
+    },
+    getLoader: (state) => {
+      return state.loader;
+    },
+    getError: (state) => {
+      return state.error;
     },
   },
 };

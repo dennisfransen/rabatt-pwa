@@ -1,5 +1,11 @@
 <template>
   <div id="discounts">
+     <v-skeleton-loader
+      :loading="getLoader"
+      transition-group="scale-transition"
+      height="100%"
+      type="setences"
+    >
     <v-sheet v-for="discount in getDiscountsByCategory" :key="discount.id" @click="goToDiscount(discount.id)">
       <v-img class="image" height="100" :src="discount.imageURL">
         <div class="image-overlay">
@@ -23,6 +29,7 @@
         </div>
       </v-img>
     </v-sheet>
+     </v-skeleton-loader>
   </div>
 </template>
 
@@ -35,7 +42,7 @@ export default {
     this.fetchDiscountsByCategory({categoryId: this.$route.params.id})
   },
   computed: {
-    ...mapGetters("Discounts", ["getDiscountsByCategory"]),
+    ...mapGetters("Discounts", ["getDiscountsByCategory", "getLoader"]),
   },
   methods: {
     ...mapActions("Discounts", ["fetchDiscountsByCategory"]),

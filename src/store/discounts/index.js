@@ -1,5 +1,6 @@
 import * as firebase from "firebase/app";
 import "firebase/firestore";
+import "firebase/storage";
 
 export default {
   namespaced: true,
@@ -7,6 +8,8 @@ export default {
     discounts: [],
     discount: {},
     categorizedDiscounts: [],
+    loader: false,
+    error: null,
   },
   mutations: {
     setDiscounts(state, payload) {
@@ -24,9 +27,17 @@ export default {
     setCategorizeDiscounts(state, payload) {
       state.categorizedDiscounts = payload;
     },
+    setLoader(state, isLoading) {
+      state.loader = isLoading;
+    },
+    setError(state, error) {
+      state.error = error;
+    },
   },
   actions: {
     async fetchDiscounts({ commit }) {
+      commit("setLoader", true);
+      commit("setError", null);
       await firebase
         .firestore()
         .collection("discounts")
@@ -46,12 +57,17 @@ export default {
             });
           });
           commit("setDiscounts", discounts);
+          commit("setLoader", false);
         })
         .catch((error) => {
-          console.log(error);
+          commit("setLoader", false);
+          commit("setError", error);
         });
     },
     async fetchDiscountsByCategory({ commit }, { categoryId }) {
+      commit("setLoader", true);
+      commit("setError", null);
+
       let catId = parseInt(categoryId);
 
       await firebase
@@ -73,29 +89,56 @@ export default {
             });
           });
           commit("setCategorizeDiscounts", discounts);
+          commit("setLoader", false);
         });
     },
     async createDiscount({ commit }, discount) {
+      commit("setLoader", true);
+      commit("setError", null);
+
       let discountObject = {
         id: Date.now(), // Using Date.now() to produce unique id.
         categoryId: discount.categoryId,
         title: discount.title,
         discount: discount.discount,
-        imageURL: "https://i.imgur.com/HNehDC9.jpg",
         discountDesrciption: discount.discountDesrciption,
         qrURL: "https://i.imgur.com/cTUiPh6.png",
         slogan: discount.slogan,
       };
 
+      let documentId;
+
       await firebase
         .firestore()
         .collection("discounts")
         .add(discountObject)
-        .then(() => {
+        .then((docRef) => {
           commit("addDiscount", discountObject);
+          documentId = docRef.id;
+          return documentId;
+        })
+        .then(async (documentId) => {
+          const fileName = discount.image.name;
+          const extension = fileName.slice(fileName.lastIndexOf("."));
+
+          let storageRef = firebase
+            .storage()
+            .ref(`discount-images/${documentId}${extension}`);
+          await storageRef.put(discount.image);
+          return await storageRef.getDownloadURL();
+        })
+        .then((imageURL) => {
+          commit("setLoader", false);
+          return firebase
+            .firestore()
+            .collection("discounts")
+            .doc(documentId)
+            .update({ imageURL: imageURL });
         })
         .catch((error) => {
           console.log(error);
+          commit("setLoader", false);
+          commit("setError", error);
         });
     },
   },
@@ -105,6 +148,12 @@ export default {
     },
     getDiscountsByCategory: (state) => {
       return state.categorizedDiscounts;
+    },
+    getLoader: (state) => {
+      return state.loader;
+    },
+    getError: (state) => {
+      return state.error;
     },
   },
 };
