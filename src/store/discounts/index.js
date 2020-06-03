@@ -39,8 +39,8 @@ export default {
               categoryId: doc.data().categoryId,
               title: doc.data().title,
               discount: doc.data().discount,
-              imageURL: doc.data().discount,
-              discountDesrciption: doc.data().discount,
+              imageURL: doc.data().imageURL,
+              discountDesrciption: doc.data().discountDesrciption,
               qrURL: doc.data().qrURL,
               slogan: doc.data().slogan,
             });
@@ -67,7 +67,7 @@ export default {
               title: doc.data().title,
               discount: doc.data().discount,
               imageURL: doc.data().imageURL,
-              discountDesrciption: doc.data().discount,
+              discountDesrciption: doc.data().discountDesrciption,
               qrURL: doc.data().qrURL,
               slogan: doc.data().slogan,
             });
@@ -83,7 +83,7 @@ export default {
         discount: discount.discount,
         imageURL: "https://i.imgur.com/HNehDC9.jpg",
         discountDesrciption: discount.discountDesrciption,
-        qrURL: "https://i.imgur.com/qj1Ml5K.png",
+        qrURL: "https://i.imgur.com/cTUiPh6.png",
         slogan: discount.slogan,
       };
 

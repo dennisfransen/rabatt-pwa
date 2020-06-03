@@ -31,15 +31,7 @@ export default {
     this.discount = this.getDiscount;
   },
   data: () => ({
-    discount: {
-      id: "",
-      categoryId: "",
-      title: "",
-      discount: "",
-      imageURL: "",
-      discountDesrciption: "",
-      qrURL: "",
-    },
+    discount: {},
   }),
   methods: {
     ...mapMutations("Discounts", ["setDiscount"]),
