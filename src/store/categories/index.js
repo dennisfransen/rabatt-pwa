@@ -78,7 +78,7 @@ export default {
       return state.categories;
     },
     getFeaturedCategories: (state, getters) => {
-      return getters.getCategories.slice(0, 6);
+      return getters.getCategories.slice(0, 9);
     },
     getLoader: (state) => {
       return state.loader;

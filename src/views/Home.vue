@@ -1,8 +1,8 @@
 <template>
   <v-container>
-    <section id="search">
+    <!-- <section id="search">
       <Search />
-    </section>
+    </section> -->
     <section id="trending">
       <Trending />
     </section>
@@ -13,14 +13,14 @@
 </template>
 
 <script>
-import Search from "@/components/utils/Search";
+// import Search from "@/components/utils/Search";
 import Trending from "@/components/home/Trending";
 import CategoryGrid from "@/components/categories/CategoryGrid";
 
 export default {
   name: "Home",
   components: {
-    Search,
+    // Search,
     Trending,
     CategoryGrid
   },

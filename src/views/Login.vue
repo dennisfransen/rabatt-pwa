@@ -1,6 +1,13 @@
 <template>
   <v-container fill-height>
-    <v-card class="mx-auto" flat color="transparent" min-width="350">
+    <v-progress-circular
+      class="mx-auto"
+      v-if="getLoader"
+      size="100"
+      indeterminate
+      color="primary"
+    ></v-progress-circular>
+    <v-card v-else class="mx-auto" flat color="transparent" min-width="350">
       <p class="text-center error--text" v-if="errorMessage">
         {{ errorMessage }}
       </p>
@@ -11,6 +18,7 @@
           type="email"
           label="Email"
           v-model="email"
+          clearable
           solo
         ></v-text-field>
         <v-text-field
@@ -18,21 +26,22 @@
           label="Password"
           v-model="password"
           solo
+          clearable
+          @keyup.enter="onLoginPressed"
         ></v-text-field>
-        <p class="text-end">Forgot your password?</p>
       </v-card-text>
       <v-card-actions class="px-3">
         <v-btn color="accent" block :loading="getLoader" @click="onLoginPressed"
-          >Login</v-btn
-        >
+          >Login
+        </v-btn>
       </v-card-actions>
       <v-card-text class="text-center">
         <p>
           <span>Don't have any account? </span>
           <span>
             <router-link class="secondary--text" to="/register"
-              >Register here</router-link
-            >
+              >Register here
+            </router-link>
           </span>
         </p>
       </v-card-text>

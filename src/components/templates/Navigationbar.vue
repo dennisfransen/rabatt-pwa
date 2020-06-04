@@ -38,8 +38,8 @@ export default {
     items: [
       { title: "Home", icon: "mdi-home", link: "/" },
       { title: "Profile", icon: "mdi-account", link: "/profile" },
-      { title: "Add Discount", icon: "mdi-tag-plus", link: "/add-discount"},
-      { title: "Add Category", icon: "mdi-shape", link: "/add-category"}
+      { title: "Add Discount", icon: "mdi-tag-plus", link: "/add-discount" },
+      { title: "Add Category", icon: "mdi-shape", link: "/add-category" },
     ],
   }),
   computed: {
@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     goBack() {
-      this.$router.go(-1)
+      this.$router.go(-1);
     },
     goToNotifications() {
       this.$router.push("/notifications");

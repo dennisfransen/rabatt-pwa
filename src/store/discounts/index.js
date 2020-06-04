@@ -19,6 +19,12 @@ export default {
       let discount = state.categorizedDiscounts.filter((discount) => {
         return discount.id == id;
       });
+
+      if (discount.length < 1) {
+        discount = state.discounts.filter((discount) => {
+          return discount.id == id;
+        });
+      }
       state.discount = discount[0];
     },
     addDiscount(state, payload) {
@@ -145,6 +151,9 @@ export default {
   getters: {
     getDiscount: (state) => {
       return state.discount;
+    },
+    getDiscounts: (state) => {
+      return state.discounts;
     },
     getDiscountsByCategory: (state) => {
       return state.categorizedDiscounts;

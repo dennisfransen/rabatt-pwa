@@ -1,8 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import AuthGuard from "./auth-guard";
 import Home from "@/views/Home.vue";
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
+import Profile from "@/views/Profile.vue";
+import Notifications from "@/views/Notifications.vue";
 import Categories from "@/views/Categories.vue";
 import Category from "@/views/Category.vue";
 import AddDiscount from "@/views/AddDiscount.vue";
@@ -17,6 +20,7 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+    beforeEnter: AuthGuard,
   },
   {
     path: "/login",
@@ -27,6 +31,16 @@ const routes = [
     path: "/register",
     name: "Register",
     component: Register,
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: Profile
+  },
+  {
+    path: "/notifications",
+    name: "Notifications",
+    component: Notifications
   },
   {
     path: "/categories",

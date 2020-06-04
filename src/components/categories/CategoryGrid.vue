@@ -39,18 +39,14 @@
 
 <script>
 import TitleWithButton from "@/components/utils/TitleWithButton";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Categories",
-  created() {
-    this.fetchCategories();
-  },
   computed: {
     ...mapGetters("Categories", ["getFeaturedCategories", "getLoader"]),
   },
   methods: {
-    ...mapActions("Categories", ["fetchCategories"]),
     goToCategory(id) {
       this.$router.push(`/category/${id}`);
     },

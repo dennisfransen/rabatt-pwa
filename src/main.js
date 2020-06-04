@@ -5,6 +5,7 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 import * as firebase from "firebase/app";
+import "firebase/auth";
 
 Vue.config.productionTip = false;
 
@@ -25,4 +26,13 @@ new Vue({
   store,
   vuetify,
   render: (h) => h(App),
+  created() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        store.dispatch("autoLogin", user);
+        store.dispatch("Categories/fetchCategories");
+        store.dispatch("Discounts/fetchDiscounts");
+      }
+    });
+  },
 }).$mount("#app");

@@ -38,7 +38,7 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Discounts",
-  mounted() {
+  created() {
     this.fetchDiscountsByCategory({categoryId: this.$route.params.id})
   },
   computed: {

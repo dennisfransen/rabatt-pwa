@@ -1,9 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import Discounts from "./discounts";
-import Categories from "./categories";
+import router from "@/router";
 import * as firebase from "firebase/app";
 import "firebase/auth";
+import Discounts from "./discounts";
+import Categories from "./categories";
 
 Vue.use(Vuex);
 
@@ -16,7 +17,6 @@ export default new Vuex.Store({
   mutations: {
     setUser(state, payload) {
       state.user = payload;
-      console.log(state.user);
     },
     setErrorMessage(state, payload) {
       state.errorMessage = payload;
@@ -26,23 +26,28 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    login({ commit }, { email, password }) {
+    async login({ commit }, { email, password }) {
       commit("setErrorMessage", null);
       commit("setLoader", true);
-      firebase
+      await firebase
         .auth()
         .signInWithEmailAndPassword(email, password)
         .then((user) => {
           commit("setErrorMessage", null);
           commit("setLoader", false);
           commit("setUser", user);
+          router.push("/");
         })
         .catch((error) => {
           commit("setErrorMessage", error);
           commit("setLoader", false);
         });
     },
-    register({ commit }, { email, password, verifyPassword }) {
+
+    async register(
+      { commit },
+      { displayName, email, password, verifyPassword }
+    ) {
       commit("setErrorMessage", null);
       commit("setLoader", true);
 
@@ -52,18 +57,37 @@ export default new Vuex.Store({
         return;
       }
 
-      firebase
+      await firebase
         .auth()
         .createUserWithEmailAndPassword(email, password)
+        .then(async (user) => {
+          await firebase.auth().currentUser.updateProfile({
+            displayName: displayName,
+          });
+          return user;
+        })
         .then((user) => {
           commit("setErrorMessage", null);
           commit("setLoader", false);
           commit("setUser", user);
+          // router.push("/");
         })
         .catch((error) => {
           commit("setErrorMessage", error);
           commit("setLoader", false);
         });
+    },
+
+    autoLogin({ commit }, payload) {
+      commit("setLoader", true);
+      commit("setUser", payload);
+      router.replace("/");
+      commit("setLoader", false);
+    },
+    async logout({ commit }) {
+      await firebase.auth().signOut();
+      commit("setUser", null);
+      router.push("/login");
     },
   },
   getters: {
@@ -72,6 +96,9 @@ export default new Vuex.Store({
     },
     getLoader: (state) => {
       return state.loader;
+    },
+    getUser(state) {
+      return state.user;
     },
   },
   modules: { Discounts, Categories },

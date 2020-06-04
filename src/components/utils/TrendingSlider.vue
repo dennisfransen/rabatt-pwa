@@ -1,17 +1,27 @@
 <template>
   <v-slide-group v-model="selected" class="py-2" mandatory center-active>
-    <v-slide-item v-for="trend in trends" :key="trend.title" class="green">
+    <v-slide-item
+      v-for="discount in getDiscounts"
+      :key="discount.id"
+      class="green"
+    >
       <v-card
         class="mr-2 my-2"
         height="125"
         width="200"
-        @click="goToTrend(trend.title)"
+        @click="goToDiscount(discount.id)"
       >
-        <v-img class="image" :src="trend.image">
+        <v-img class="image" :src="discount.imageURL">
           <div class="image-overlay">
-            <v-container fill-height>
-              <h1 class="white--text mx-auto">{{ trend.title }}</h1>
-            </v-container>
+            <v-row>
+              <h1
+                class="white--text mx-auto text-center"
+                style="line-height: 125px;"
+              >
+                {{ discount.title }}
+              </h1>
+              <h1 class="discount-location">{{ discount.discount }}</h1>
+            </v-row>
           </div>
         </v-img>
       </v-card>
@@ -20,20 +30,18 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "TrendingSlider",
   data: () => ({
     selected: 0,
-    trends: [
-      { image: "https://i.imgur.com/2ul6pa7.jpg", title: "Pizza" },
-      { image: "https://i.imgur.com/BTrujQY.jpg", title: "Clothing" },
-      { image: "https://i.imgur.com/ZUa3YUh.jpg", title: "Restaurant" },
-      { image: "https://i.imgur.com/3Z1LIuo.jpg", title: "Hamburger" },
-    ],
   }),
+  computed: {
+    ...mapGetters("Discounts", ["getDiscounts"]),
+  },
   methods: {
-    goToTrend(trend) {
-      alert(trend);
+    goToDiscount(id) {
+      this.$router.push(`/discounts/${id}`);
     },
   },
 };
@@ -46,9 +54,17 @@ export default {
 }
 
 .image-overlay {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.2);
   height: 100%;
   width: 100%;
   z-index: 10;
+}
+
+.discount-location {
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  color: white;
+  
 }
 </style>

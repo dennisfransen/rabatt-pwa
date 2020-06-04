@@ -1,9 +1,9 @@
 <template>
   <div id="categories">
     <v-container class="pb-0">
-      <section id="search">
+      <!-- <section id="search">
         <Search />
-      </section>
+      </section> -->
     </v-container>
     <section id="category-list">
       <CategoryList />
@@ -12,13 +12,13 @@
 </template>
 
 <script>
-import Search from "@/components/utils/Search";
+// import Search from "@/components/utils/Search";
 import CategoryList from "@/components/categories/CategoryList";
 
 export default {
   name: "Categories",
   components: {
-    Search,
+    // Search,
     CategoryList,
   },
 };
