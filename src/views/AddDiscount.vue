@@ -1,5 +1,7 @@
 <template>
   <v-container>
+    <h1>Add Category</h1>
+    <div class="py-2"></div>
     <v-text-field type="text" label="Company *" solo v-model="title"></v-text-field>
     <v-text-field type="text" label="Slogan *" solo v-model="slogan"></v-text-field>
     <v-text-field type="text" label="Discount *" solo v-model="discount"></v-text-field>
